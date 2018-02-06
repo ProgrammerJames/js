@@ -1,0 +1,22 @@
+<html>
+<head>
+</head>
+<body onload="">
+<canvas id="game" width="480" height="480" style="background-image: url('hidden.png'); background-repeat: true"></canvas>
+</body>
+<script type="text/javascript" src="display.js"></script>
+<script type="text/javascript" src="field.js"></script>
+<script type="text/javascript">
+var size = 20
+var canvas = document.getElementById("game")
+var field = new Field(size)
+var display = new Display(canvas, size)
+
+canvas.onclick = function(event) {
+	var x = Math.floor((event.clientX-(canvas.offsetLeft)) / 24)
+	var y = Math.floor((event.clientY-(canvas.offsetTop)) / 24)
+	
+	field.RevealCell(display, x, y)
+}
+</script>
+</html>
