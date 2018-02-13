@@ -1,22 +1,36 @@
 <html>
 <head>
 </head>
-<body onload="">
-<canvas id="game" width="480" height="480" style="background-image: url('hidden.png'); background-repeat: true"></canvas>
+<body>
+	<canvas id="game" <!--style="background-image: url('hidden.png'); background-repeat: true"--> ></canvas>
 </body>
 <script type="text/javascript" src="display.js"></script>
 <script type="text/javascript" src="field.js"></script>
 <script type="text/javascript">
-var size = 20
+var tileSize = 24
 var canvas = document.getElementById("game")
-var field = new Field(size)
-var display = new Display(canvas, size)
+var context = canvas.getContext("2d")
+var field = {}
+var display = {}
+
+function initialize(area, mine_probability) {
+	canvas.width = area*tileSize
+	canvas.height = area*tileSize
+	
+	field = new Field(area, mine_probability)
+	display = new Display(context, area, tileSize)
+}
 
 canvas.onclick = function(event) {
-	var x = Math.floor((event.clientX-(canvas.offsetLeft)) / 24)
-	var y = Math.floor((event.clientY-(canvas.offsetTop)) / 24)
+	var rect = canvas.getBoundingClientRect()
+	var x = Math.floor((event.clientX-(rect.left)) / tileSize)
+	var y = Math.floor((event.clientY-(rect.top)) / tileSize)
 	
 	field.RevealCell(display, x, y)
+}
+
+hiddenImg.onload = function() {
+	initialize(20, 8)
 }
 </script>
 </html>
